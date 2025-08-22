@@ -57,11 +57,11 @@ def _get_filtered_stats(
 class _StatsCollector:
     """Temporary collector for stats within a context."""
 
-    __slots__ = ("_data",)  # Memory optimization
+    __slots__ = ("_data",)
 
     def __init__(self) -> None:
         self._data: dict[str, dict[tuple[tuple[str, str | bool], ...], int | float]] = (
-            defaultdict(lambda: defaultdict(lambda: 0))
+            defaultdict(lambda: defaultdict(int))
         )
 
     def increment(
@@ -92,7 +92,7 @@ class Recorder:
 
     def __init__(self) -> None:
         self._data: dict[str, dict[tuple[tuple[str, str | bool], ...], int | float]] = (
-            defaultdict(lambda: defaultdict(lambda: 0))
+            defaultdict(lambda: defaultdict(int))
         )
         self._has_recorded = False
 
@@ -170,6 +170,15 @@ def timer(
     key: str | None = None,
     tags: Tags | None = None,
 ) -> Callable[P, T] | Callable[[Callable[P, T]], Callable[P, T]]:
+    """Decorator to time function execution and record statistics.
+
+    Records two keys:
+    - {key}.count: Number of calls
+    - {key}.total_dur: Total duration in seconds
+
+    Default key is "calls.{func.__qualname__}".
+    """
+
     def create_wrapper(f: Callable[P, T]) -> Callable[P, T]:
         timer_key = key if key is not None else f"calls.{f.__qualname__}"
         tags_tuple = () if not tags else _normalize_tags(tags)
