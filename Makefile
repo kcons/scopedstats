@@ -21,12 +21,12 @@ test: build pytest typecheck lint
 # Run pytest
 pytest:
 	@echo "🧪 Running pytest tests..."
-	uv run python test_scoped_stats.py
+	uv run pytest
 
 # Run type checking
 typecheck:
 	@echo "🔍 Running mypy type checking..."
-	uv run mypy --explicit-package-bases scoped_stats.py test_scoped_stats.py benchmark.py
+	uv run mypy --explicit-package-bases *.py
 
 # Run linting
 lint:

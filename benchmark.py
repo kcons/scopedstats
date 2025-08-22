@@ -2,7 +2,7 @@
 """Simple benchmark to demonstrate performance improvements."""
 
 import time
-from scoped_stats import Recorder, incr, timer
+from scopedstats import Recorder, incr, timer
 
 
 def benchmark_basic_operations():

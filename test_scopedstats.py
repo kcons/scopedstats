@@ -1,6 +1,6 @@
 import pytest
 import time
-from scoped_stats import Recorder, incr, timer
+from scopedstats import Recorder, incr, timer
 
 
 def test_basic_increment():
@@ -446,14 +446,14 @@ def test_recorder_require_recording_flag():
 
 def test_recorder_new_api_pattern():
     """Test the new recommended API pattern."""
-    import scoped_stats
+    import scopedstats
 
     # New recommended pattern
-    recorder = scoped_stats.Recorder()
+    recorder = scopedstats.Recorder()
     with recorder.record():
-        scoped_stats.incr("operations", amount=5)
+        scopedstats.incr("operations", amount=5)
 
-        @scoped_stats.timer(key="work")
+        @scopedstats.timer(key="work")
         def do_work():
             time.sleep(0.001)
 

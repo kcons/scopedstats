@@ -1,27 +1,27 @@
-# scoped-stats
+# scopedstats
 
 A Python library for conditional metrics collection using context managers. Perfect for collecting detailed performance metrics only when needed, such as for slow requests that you want to analyze after the fact.
 
 ## Installation
 
 ```bash
-pip install scoped-stats
+pip install scopedstats
 ```
 
 ## Quick Start
 
 ```python
-from scoped_stats import Recorder, incr, timer
+import scopedstats
 
 # Create a recorder
-recorder = Recorder()
+recorder = scopedstats.Recorder()
 
 # Collect metrics within a context
 with recorder.record():
-    incr("requests")
-    incr("cache.hits", tags={"type": "redis"})
+    scopedstats.incr("requests")
+    scopedstats.incr("cache.hits", tags={"type": "redis"})
     
-    @timer
+    @scopedstats.timer
     def slow_function():
         # Your code here
         pass
@@ -72,12 +72,14 @@ Decorator that records function call counts and total duration. Creates two metr
 ### Conditional Slow Request Analysis
 
 ```python
-recorder = Recorder()
+import scopedstats
+
+recorder = scopedstats.Recorder()
 
 with recorder.record():
     # Your request handling code
-    incr("db.queries")
-    incr("cache.misses", tags={"service": "user-api"})
+    scopedstats.incr("db.queries")
+    scopedstats.incr("cache.misses", tags={"service": "user-api"})
 
 # Only log detailed stats for slow requests
 if request_duration > 1.0:
@@ -88,11 +90,13 @@ if request_duration > 1.0:
 ### Tagged Metrics with Filtering
 
 ```python
-recorder = Recorder()
+import scopedstats
+
+recorder = scopedstats.Recorder()
 
 with recorder.record():
-    incr("api.calls", tags={"endpoint": "/users", "method": "GET"})
-    incr("api.calls", tags={"endpoint": "/posts", "method": "POST"})
+    scopedstats.incr("api.calls", tags={"endpoint": "/users", "method": "GET"})
+    scopedstats.incr("api.calls", tags={"endpoint": "/posts", "method": "POST"})
 
 # Get only GET requests
 get_stats = recorder.get_result(tag_filter={"method": "GET"})

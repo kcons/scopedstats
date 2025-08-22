@@ -1,5 +1,5 @@
 [project]
-name = "scoped-stats"
+name = "scopedstats"
 version = "0.1.0"
 description = "A Python library for scoped statistics collection using context managers"
 readme = "README.md"
