@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.python-version
+
+# Testing
+.pytest_cache/
+.coverage
+
+# IDE
+*.swp
+.vscode/
+
+# macOS
+.DS_Store
